@@ -1,9 +1,9 @@
 version: '3.7'
 
 services:
-  mysql-db:
+  mysql:
     build: ./mysql
-    container_name: ${PROJECT_NAME}_db
+    container_name: ${PROJECT_NAME}-mysql
     volumes:
       - local-db-store:/var/lib/mysql # データの永続化
       - ./mysql/sql:/docker-entrypoint-initdb.d
