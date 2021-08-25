@@ -69,7 +69,36 @@ Query OK, 0 rows affected (0.02 sec)
 mysql> use local_db
 ```
 
-##
+
+## characterの設定の確認
+
+```shell-session
+mysql> show character set;
+mysql> show variables like 'char%';
+```
+
+## データのダンプとリストア
+
+```shell-session
+$ mysqldump -u root -p ${PASSWORD} local_db > test_db2108.sql
+$ mysql -u root -p ${PASSWORD} -D local_db < test_db2108.sql
+```
+
+# テストデータ
+
+```SQL
+CREATE TABLE testers (
+id int(11) not null AUTO_INCREMENT,
+name varchar(255) default null,
+tel varchar(255) default null,
+email varchar(255) default null,
+message varchar(255) default null,
+updated_at datetime not null,
+created_at datetime not null,
+deleted_at datetime not null,
+primary key (`id`)
+)ENGINE=InnoDB default charset=utf8mb4;
+```
 
 ----
 
