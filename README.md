@@ -88,15 +88,15 @@ $ mysql -u root -p ${PASSWORD} -D local_db < test_db2108.sql
 
 ```SQL
 CREATE TABLE testers (
-id int(11) not null AUTO_INCREMENT,
-name varchar(255) default null,
-tel varchar(255) default null,
-email varchar(255) default null,
-message varchar(255) default null,
-updated_at datetime not null,
-created_at datetime not null,
-deleted_at datetime not null,
-primary key (`id`)
+    id int(11) not null AUTO_INCREMENT,
+    name varchar(255) default null,
+    tel varchar(255) default null,
+    email varcshar(255) default null,
+    message varchar(255) default null,
+    updated_at datetime not null,
+    created_at datetime not null,
+    deleted_at datetime not null,
+    primary key (`id`)
 )ENGINE=InnoDB default charset=utf8mb4;
 ```
 
