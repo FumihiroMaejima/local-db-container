@@ -1,3 +1,6 @@
+echo:
+	@echo test
+
 ##############################
 # make docker environmental
 ##############################
