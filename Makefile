@@ -21,6 +21,9 @@ ps:
 dev:
 	sh ./scripts/dev.sh
 
+serve:
+	sh ./scripts/container.sh
+
 ##############################
 # db container(mysql)
 ##############################
