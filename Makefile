@@ -41,6 +41,8 @@ mysql:
 
 ch-v57:
 	sed -i -e "s/FROM mysql:$(MYSQL_VERSION80)/FROM mysql:$(MYSQL_VERSION57)/g" mysql/Dockerfile
+	@echo current mysql version is v$(MYSQL_VERSION57)!
 
 ch-v80:
 	sed -i -e "s/FROM mysql:$(MYSQL_VERSION57)/FROM mysql:$(MYSQL_VERSION80)/g" mysql/Dockerfile
+	@echo current mysql version is v$(MYSQL_VERSION80)!
