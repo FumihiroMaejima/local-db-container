@@ -34,6 +34,8 @@ serve:
 mysql:
 	docker-compose exec db bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
+mysql-dump:
+	sh ./scripts/get-dump.sh
 
 ##############################
 # manage docker file
