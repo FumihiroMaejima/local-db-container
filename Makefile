@@ -4,6 +4,7 @@ MYSQL_VERSION57=5.7
 
 echo:
 	@echo test
+	@date "+%m/%d/%Y %H:%M"
 
 ##############################
 # make docker environmental
