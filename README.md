@@ -31,6 +31,14 @@ local     local-db-store
 $ docker volume rm local-db-store
 ```
 
+## v5.7やv8.0など、複数のバージョンを用意する必要がある場合はvolumeも分けておく。
+
+```shell-session
+$ docker volume create local-db-v57-store
+$ docker volume create local-db-v80-store
+```
+
+
 ---
 
 # CLIでDB操作

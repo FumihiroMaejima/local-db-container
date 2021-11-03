@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SEPARATOPION='+++++++++++++++++++++++++++'
+SEPARATOPION='---------------------------'
 START_MESSAGE='check container status.'
 echo ${SEPARATOPION}
 echo ${START_MESSAGE}
