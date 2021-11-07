@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SEPARATOPION='+++++++++++++++++++++++++++'
+SEPARATOPION='---------------------------'
 START_MESSAGE='check container status.'
 DOCKER_COMPOSE_FILE='./docker-compose.yml'
 echo ${SEPARATOPION}

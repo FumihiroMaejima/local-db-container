@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SEPARATOPION='+++++++++++++++++++++++++++'
+SEPARATOPION='---------------------------'
 START_MESSAGE='start restore database dump.'
 echo ${SEPARATOPION}
 echo ${START_MESSAGE}
