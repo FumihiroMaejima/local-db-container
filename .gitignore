@@ -14,3 +14,9 @@ mysql_data
 
 # debug setting file
 .vscode/launch.json
+
+# Dockerfile
+Dockerfile
+
+# Dockerfile tmp
+Dockerfile-e
