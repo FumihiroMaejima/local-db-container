@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   mysql:
+    platform: 'linux/amd64'
     build: ./mysql
     container_name: ${PROJECT_NAME}-mysql
     volumes:
