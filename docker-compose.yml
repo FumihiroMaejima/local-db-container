@@ -19,4 +19,5 @@ services:
 volumes:
   local-db-store:
     name: ${VOLUME_NAME}
-    driver: local
+    # driver: local
+    external: true
