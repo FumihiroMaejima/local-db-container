@@ -30,6 +30,26 @@ serve:
 	sh ./scripts/container.sh
 
 ##############################
+# make docker environmental MySQL v8.0
+##############################
+up-v80:
+	docker-compose -f ./docker-compose.v80.yml up -d
+
+stop-v80:
+	docker-compose -f ./docker-compose.v80.yml stop
+
+down-v80:
+	docker-compose -f ./docker-compose.v80.yml down
+
+down-rmi-v80:
+	docker-compose -f ./docker-compose.v80.yml down --rmi all
+ps-v80:
+	docker-compose -f ./docker-compose.v80.yml ps
+
+v80:
+	sh ./scripts/container-v80.sh
+
+##############################
 # db container(mysql)
 ##############################
 mysql:
