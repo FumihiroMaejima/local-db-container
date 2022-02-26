@@ -162,4 +162,51 @@ log-bin
 
 ---
 
+# レプリケーション設定
+
+## master
+
+マスター用のDBは既存と同一の設定で一旦は可
+
+`my.cnf`に下記の設定を追加
+
+```config
+[mysqld]
+...
+
+log-bin
+# マスターとスレーブが自身を一意に識別するための設定
+server-id=101
+
+```
+
+slaveアカウントの作成
+
+`SLAVE_SERVER_IP`はローカルでは`%`でも良い。
+
+```sql
+mysql> CREATE USER 'repl'@'${SLAVE_SERVER_IP}' identified by 'slave-password';
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'${SLAVE_SERVER_IP}';
+
+FLUSH PRIVILEGES;
+```
+
+masterのバイナリログの確認
+
+```sql
+mysql> show master status;
+Empty set (0.00 sec)
+```
+
+
+## slave
+
+```shell-session
+$ 
+```
+
+
+
+---
+
 
