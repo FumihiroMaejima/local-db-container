@@ -110,4 +110,56 @@ CREATE TABLE testers (
 
 ----
 
+## システムdateの確認
+
+```sql
+mysql> SELECT SYSDATE();
+```
+
+---
+
+## バイナリログの確認
+
+```shell-session
+$ mysqlbinlog binlog.000001
+# DB名を指定
+$ mysqlbinlog --database=${DB_NAME} mysql-bin.000001
+```
+
+mysql上で確認
+
+```sql
+mysql> SHOW binary logs;
+
+mysql> show binlog events in 'mysql-bin.000011';
+
+Log_name|Pos|Event_type|Server_id|End_log_pos|Info|
+--------+---+----------+---------+-----------+----+
+```
+
+### binlog_formatの確認
+
+```sql
+mysql> show variables like 'binlog_format';
+
+Variable_name|Value|
+-------------+-----+
+binlog_format|ROW  |
+
+```
+
+###バイナリログの設定
+
+`my.cnf`に下記の設定を追加
+
+```config
+[mysqld]
+...
+# バイナリログを出力
+log-bin
+
+```
+
+---
+
 
