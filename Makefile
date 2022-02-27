@@ -50,6 +50,26 @@ v80:
 	sh ./scripts/container-v80.sh
 
 ##############################
+# make docker environmental MySQL Replication v5.7
+##############################
+up-repl:
+	docker-compose -f ./docker-compose.replication-v57.yml up -d
+
+stop-repl:
+	docker-compose -f ./docker-compose.replication-v57.yml stop
+
+down-repl:
+	docker-compose -f ./docker-compose.replication-v57.yml down
+
+down-rmi-repl:
+	docker-compose -f ./docker-compose.replication-v57.yml down --rmi all
+ps-repl:
+	docker-compose -f ./docker-compose.replication-v57.yml ps
+
+repl:
+	sh ./scripts/container-replication-v57.sh
+
+##############################
 # db container(mysql)
 ##############################
 mysql:
