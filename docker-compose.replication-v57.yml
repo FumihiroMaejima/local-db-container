@@ -12,7 +12,7 @@ services:
       - "${MYSQL_MASTER_PORT}:3306"
     environment:
       DB_USER: ${DB_USER}
-      DB_DATABASE: ${DB_DATABASE}
+      DB_DATABASE: ${DB_REPLICATION_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       TZ: "Asia/Tokyo"
 
@@ -29,7 +29,7 @@ services:
       - ./mysql/replication/v57/slave/sql:/docker-entrypoint-initdb.d
     environment:
       DB_USER: ${DB_USER}
-      DB_DATABASE: ${DB_DATABASE}
+      DB_DATABASE: ${DB_REPLICATION_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       TZ: "Asia/Tokyo"
 
