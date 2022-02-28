@@ -25,7 +25,7 @@ services:
     depends_on:
       - mysql-master
     volumes:
-      # - local-db-store:/var/lib/mysql # データの永続化
+      - local-db-store-slave:/var/lib/mysql # データの永続化
       - ./mysql/replication/v57/slave/sql:/docker-entrypoint-initdb.d
     environment:
       DB_USER: ${DB_USER}
@@ -36,5 +36,9 @@ services:
 volumes:
   local-db-store:
     name: ${VOLUME_NAME_REPLICATION_V57}
+    # driver: local
+    external: true
+  local-db-store-slave:
+    name: ${VOLUME_NAME_REPLICATION_V57}-slave
     # driver: local
     external: true

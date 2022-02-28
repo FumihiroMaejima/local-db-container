@@ -173,8 +173,8 @@ log-bin
 ```config
 [mysqld]
 ...
-
-log-bin
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
 # マスターとスレーブが自身を一意に識別するための設定
 server-id=101
 
@@ -193,13 +193,42 @@ FLUSH PRIVILEGES;
 
 masterのバイナリログの確認
 
+`File`と`Position`を確認する
+
 ```sql
-mysql> show master status;
-Empty set (0.00 sec)
+mysql> SHOW MASTER STATUS;
+File            |Position|Binlog_Do_DB|Binlog_Ignore_DB|Executed_Gtid_Set|
+----------------+--------+------------+----------------+-----------------+
+mysql-bin.000003|   154  |            |                |                 |
+
 ```
 
 
 ## slave
+
+`my.cnf`に下記の設定を追加
+
+```config
+[mysqld]
+...
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+# スレーブが自身を一意に識別するための設定
+server-id=102
+
+```
+
+master情報の設定とレプリケーションのスタートを実行
+
+`MASTER_LOG_FILE`と`MASTER_LOG_POS`にmaster側で確認したデータを設定する。
+
+```sql
+mysql> CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='repl', MASTER_PASSWORD='password', MASTER_LOG_FILE='mysql-bin.000003', MASTER_LOG_POS=154;
+mysql> START SLAVE;
+
+```
+
+
 
 ```shell-session
 $ 
