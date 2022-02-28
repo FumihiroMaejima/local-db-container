@@ -5,6 +5,6 @@ GRANT ALL PRIVILEGES ON local_db.* TO 'root'@'%';
 FLUSH PRIVILEGES;
 
 -- masterの情報の設定
-CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='repl', MASTER_LOG_FILE='mysql-bin.000003', MASTER_LOG_POS=548;
+CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='repl', MASTER_PASSWORD='password', MASTER_LOG_FILE='mysql-bin.000003', MASTER_LOG_POS=154;
 -- レプリケーションの開始
 START SLAVE;

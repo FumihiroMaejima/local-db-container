@@ -10,7 +10,7 @@ default-time-zone = SYSTEM
 log_timestamps = SYSTEM
 
 # バイナリログを出力
-log-bin
+log_bin = /var/log/mysql/mysql-bin.log
 server-id=101
 
 [mysql]
