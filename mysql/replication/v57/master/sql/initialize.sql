@@ -3,3 +3,9 @@ CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON local_db.* TO 'root'@'%';
 
 FLUSH PRIVILEGES;
+
+-- レプリケーション用ユーザの作成
+CREATE USER IF NOT EXISTS 'repl'@'%' IDENTIFIED BY 'password';
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+
+FLUSH PRIVILEGES;

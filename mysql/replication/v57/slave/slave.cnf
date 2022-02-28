@@ -12,7 +12,7 @@ log_timestamps = SYSTEM
 # バイナリログを出力
 log-bin
 server-id=102
-read_only=1
+# read_only=1
 
 
 [mysql]
