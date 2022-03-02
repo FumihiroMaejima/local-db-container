@@ -14,6 +14,14 @@ log_bin = /var/log/mysql/mysql-bin.log
 server-id=102
 # read_only=1
 
+# GTIDモード利用時
+# GTIDモード有効化
+gtid-mode=ON
+# スレーブがマスターサーバーから受け取った更新をそれ自身のバイナリログに書き込むようにする
+log-slave-updates
+# トランザクションセーフなステートメントのみのログを記録
+enforce-gtid-consistency
+
 
 [mysql]
 default-character-set=utf8mb4

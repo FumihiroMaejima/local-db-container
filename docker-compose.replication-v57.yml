@@ -27,6 +27,7 @@ services:
     volumes:
       - local-db-store-slave:/var/lib/mysql # データの永続化
       - ./mysql/replication/v57/slave/sql:/docker-entrypoint-initdb.d
+      # - ./mysql/replication/v57/slave/start-slave.sh:/docker-entrypoint-initdb.d/start-slave.sh #初期化スクリプトをコピー
     environment:
       DB_USER: ${DB_USER}
       DB_DATABASE: ${DB_REPLICATION_DATABASE}
