@@ -3,21 +3,21 @@ version: '3.7'
 services:
   mysql:
     platform: 'linux/amd64'
-    build: ./mysql/v57
-    container_name: ${PROJECT_NAME}-mysql
+    build: ./mysql/v80
+    container_name: ${PROJECT_NAME}-mysql-v80
     volumes:
       - local-db-store:/var/lib/mysql # データの永続化
-      - ./mysql/v57/sql:/docker-entrypoint-initdb.d
+      - ./mysql/v80/sql:/docker-entrypoint-initdb.d
     ports:
       - "${MYSQL_PORT}:3306"
     environment:
       DB_USER: ${DB_USER}
-      DB_DATABASE: ${DB_DATABASE}
+      DB_DATABASE: ${DB_DATABASE_V80}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       TZ: "Asia/Tokyo"
 
 volumes:
   local-db-store:
-    name: ${VOLUME_NAME}
+    name: ${VOLUME_NAME_V80}
     # driver: local
     external: true

@@ -1,0 +1,29 @@
+[mysqld]
+character-set-server=utf8mb4
+collation-server = utf8mb4_bin
+
+# MySQL8
+default_authentication_plugin=mysql_native_password
+
+# timezone
+default-time-zone = SYSTEM
+log_timestamps = SYSTEM
+
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+server-id=102
+# read_only=1
+
+# GTIDモード利用時
+# GTIDモード有効化
+gtid-mode=ON
+# スレーブがマスターサーバーから受け取った更新をそれ自身のバイナリログに書き込むようにする
+log-slave-updates
+# トランザクションセーフなステートメントのみのログを記録
+enforce-gtid-consistency
+
+
+[mysql]
+default-character-set=utf8mb4
+[client]
+default-character-set=utf8mb4
