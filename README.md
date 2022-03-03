@@ -110,4 +110,164 @@ CREATE TABLE testers (
 
 ----
 
+## システムdateの確認
+
+```sql
+mysql> SELECT SYSDATE();
+```
+
+---
+
+## バイナリログの確認
+
+```shell-session
+$ mysqlbinlog binlog.000001
+# DB名を指定
+$ mysqlbinlog --database=${DB_NAME} mysql-bin.000001
+```
+
+mysql上で確認
+
+```sql
+mysql> SHOW binary logs;
+
+mysql> show binlog events in 'mysql-bin.000011';
+
+Log_name|Pos|Event_type|Server_id|End_log_pos|Info|
+--------+---+----------+---------+-----------+----+
+```
+
+### binlog_formatの確認
+
+```sql
+mysql> show variables like 'binlog_format';
+
+Variable_name|Value|
+-------------+-----+
+binlog_format|ROW  |
+
+```
+
+###バイナリログの設定
+
+`my.cnf`に下記の設定を追加
+
+```config
+[mysqld]
+...
+# バイナリログを出力
+log-bin
+
+```
+
+---
+
+# レプリケーション設定
+
+## master
+
+マスター用のDBは既存と同一の設定で一旦は可
+
+`my.cnf`に下記の設定を追加
+
+```config
+[mysqld]
+...
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+# マスターとスレーブが自身を一意に識別するための設定
+server-id=101
+
+```
+
+slaveアカウントの作成
+
+`SLAVE_SERVER_IP`はローカルでは`%`でも良い。
+
+```sql
+mysql> CREATE USER 'repl'@'${SLAVE_SERVER_IP}' identified by 'slave-password';
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'${SLAVE_SERVER_IP}';
+
+FLUSH PRIVILEGES;
+```
+
+masterのバイナリログの確認
+
+`File`と`Position`を確認する
+
+```sql
+mysql> SHOW MASTER STATUS;
+File            |Position|Binlog_Do_DB|Binlog_Ignore_DB|Executed_Gtid_Set|
+----------------+--------+------------+----------------+-----------------+
+mysql-bin.000003|   154  |            |                |                 |
+
+```
+
+
+## slave
+
+`my.cnf`に下記の設定を追加
+
+```config
+[mysqld]
+...
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+# スレーブが自身を一意に識別するための設定
+server-id=102
+
+```
+
+master情報の設定とレプリケーションのスタートを実行
+
+`MASTER_LOG_FILE`と`MASTER_LOG_POS`にmaster側で確認したデータを設定する。
+
+```sql
+mysql> CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='repl', MASTER_PASSWORD='password', MASTER_LOG_FILE='mysql-bin.000003', MASTER_LOG_POS=154;
+mysql> START SLAVE;
+
+```
+
+
+## GTIDモードを利用する場合
+
+`master.cnf`に下記の設定を追加
+
+```config
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+server-id=101
+
+# GTIDモード有効化
+gtid-mode=ON
+log-slave-updates
+enforce-gtid-consistency
+
+```
+
+
+`slave.cnf`に下記の設定を追加
+
+```config
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+server-id=102
+# read_only=1
+
+# GTIDモード有効化
+gtid-mode=ON
+log-slave-updates
+enforce-gtid-consistency
+
+```
+
+slave側の`initalize.sql`のCHANGE MASTER設定を下記の通りに修正する。
+
+```sql
+mysql> CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='repl', MASTER_PASSWORD='password', MASTER_AUTO_POSITION=1;
+```
+
+
+---
+
 

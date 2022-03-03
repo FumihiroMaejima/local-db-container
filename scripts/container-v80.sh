@@ -3,7 +3,7 @@
 # CURRENT_DIR=$(cd $(dirname $0); pwd)
 SEPARATOPION='---------------------------'
 START_MESSAGE='check container status.'
-DOCKER_COMPOSE_FILE='./docker-compose.yml'
+DOCKER_COMPOSE_FILE='./docker-compose.v80.yml'
 
 # @param {string} message
 showMessage() {
