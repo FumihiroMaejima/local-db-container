@@ -229,11 +229,43 @@ mysql> START SLAVE;
 ```
 
 
+## GTIDモードを利用する場合
 
-```shell-session
-$ 
+`master.cnf`に下記の設定を追加
+
+```config
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+server-id=101
+
+# GTIDモード有効化
+gtid-mode=ON
+log-slave-updates
+enforce-gtid-consistency
+
 ```
 
+
+`slave.cnf`に下記の設定を追加
+
+```config
+# バイナリログを出力
+log_bin = /var/log/mysql/mysql-bin.log
+server-id=102
+# read_only=1
+
+# GTIDモード有効化
+gtid-mode=ON
+log-slave-updates
+enforce-gtid-consistency
+
+```
+
+slave側の`initalize.sql`のCHANGE MASTER設定を下記の通りに修正する。
+
+```sql
+mysql> CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='repl', MASTER_PASSWORD='password', MASTER_AUTO_POSITION=1;
+```
 
 
 ---
