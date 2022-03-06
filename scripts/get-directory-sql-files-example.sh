@@ -14,12 +14,33 @@ TIME_STAMP=$(date "+%Y%m%d_%H%M%S")
 # DATABASE_PASSWORD=database_password
 # OUTPUT_FILE=sample/dump/dump_${TIME_STAMP}.sql
 
-SAMPLE_DIR=sample/tmp/directorytest
+TARGET_PATH=sample/tmp/directorytest
+
+executeSQLFile() {
+  TARGET_SQL_FILE=$1
+  echo "${TARGET_SQL_FILE_NAME}"
+  # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
+}
 
 findSqlFiles() {
-  echo $1
-  find "$1" -type f
+  DIRECTORY_NAME=$1
+  # ファイル探索
+  FIND_FILES_COMMAND=`find "${DIRECTORY_NAME}" -type f`
+
+  for filePath in ${FIND_FILES_COMMAND[@]};
+  do
+    # .sqlの拡張子が含まれている場合
+    if [ `echo ${filePath} | grep .sql` ]; then
+      # echo "${filePath}"
+      # echo $(dirname "${filePath}") # directory name.
+      TARGET_SQL_FILE_NAME=$(basename "${filePath}")
+      executeSQLFile "${TARGET_SQL_FILE_NAME}"
+    else
+      echo "${filePath} is Not SQL File."
+    fi
+  done
 }
+
 
 # @param {string} message
 showMessage() {
@@ -37,15 +58,17 @@ showMessage "${START_MESSAGE}"
 # find sample/tmp/test -type d < echo
 # ディレクトリ内のファイル数の確認
 # find sample/tmp/test -type d | while read dirctory; do echo -n $dirctory" "; find "$dirctory" -type f -maxdepth 1 | wc -l; done;
-# find "${SAMPLE_DIR}" -type d
+# find "${TARGET_PATH}" -type d
 
-FIND_DIRECTORIES_COMMAND=`find "${SAMPLE_DIR}" -type d`
+# ディレクトリ探索
+FIND_DIRECTORIES_COMMAND=`find "${TARGET_PATH}" -type d`
 
 
-# プロセスチェック結果を1行ごと配列に格納
+# 対象のディレクトリ内に置かれているディレクトリを個別にチェック
+# 対象のディレクトリも含まれる為、処理から除外する。
 for dirctory in ${FIND_DIRECTORIES_COMMAND[@]};
 do
-  if [ ${dirctory} = "${SAMPLE_DIR}" ]; then
+  if [ ${dirctory} = "${TARGET_PATH}" ]; then
     # echo 'base dir'
     continue
   else
