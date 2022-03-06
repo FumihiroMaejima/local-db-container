@@ -69,6 +69,9 @@ ps-repl:
 repl:
 	sh ./scripts/container-replication-v57.sh
 
+sqls:
+	sh ./scripts/get-directory-sql-files.sh
+
 ##############################
 # db container(mysql)
 ##############################
