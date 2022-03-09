@@ -26,15 +26,18 @@ executeSQLFile() {
   echo "${SEPARATOPION}"
   echo "TARGET SQL: ${TARGET_SQL_FILE_NAME}"
   TARGET_DB=""
+
+  # 対象のDBの探索
   for dbName in ${DB_LIST[@]};
   do
-    if [ `echo ${TARGET_SQL_FILE} | grep ${dbName}`  ]; then
+    if [ `echo ${TARGET_SQL_FILE} | grep ${dbName}` ]; then
       TARGET_DB="${dbName}"
     else
       continue
     fi
   done
 
+  # SQLの実行
   if [ -n "${TARGET_DB}" ]; then
     echo "TARGET DB: ${TARGET_DB}"
     # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
