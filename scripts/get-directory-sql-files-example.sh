@@ -19,6 +19,8 @@ TARGET_PATH=sample/tmp/directorytest
 DB_LIST=(
 "testDB1"
 "testDB2"
+"testDB3"
+"testDB4"
 )
 
 executeSQLFile() {
@@ -51,7 +53,7 @@ executeSQLFile() {
 findSqlFiles() {
   DIRECTORY_PATH=$1
   # ファイル探索
-  FIND_FILES_COMMAND=`find "${DIRECTORY_PATH}" -type f`
+  FIND_FILES_COMMAND=`find "${DIRECTORY_PATH}" -type f | sort`
 
   for filePath in ${FIND_FILES_COMMAND[@]};
   do
@@ -87,7 +89,7 @@ showMessage "${START_MESSAGE}"
 # find "${TARGET_PATH}" -type d
 
 # ディレクトリ探索
-FIND_DIRECTORIES_COMMAND=`find "${TARGET_PATH}" -type d`
+FIND_DIRECTORIES_COMMAND=`find "${TARGET_PATH}" -type d | sort`
 
 
 # 対象のディレクトリ内に置かれているディレクトリを個別にチェック
