@@ -43,10 +43,10 @@ executeSQLFile() {
   if [ -n "${TARGET_DB}" ]; then
     echo "TARGET DB: ${TARGET_DB}"
     # 1つのDBを利用する場合
-    # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
+    # docker exec ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${DATABASE_NAME}" < "${TARGET_SQL_FILE}"
 
     # DBを個別に指定する場合
-    # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${TARGET_DB} < ${TARGET_SQL_FILE}
+    # docker exec ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${TARGET_DB}" < "${TARGET_SQL_FILE}"
   else
     echo "No Match DB."
     echo "No Execute."
@@ -65,8 +65,9 @@ findSqlFiles() {
     if [ `echo ${filePath} | grep .sql` ]; then
       # echo "${filePath}"
       # echo $(dirname "${filePath}") # directory name.
-      TARGET_SQL_FILE_NAME=$(basename "${filePath}")
-      executeSQLFile "${TARGET_SQL_FILE_NAME}"
+      # TARGET_SQL_FILE_NAME=$(basename "${filePath}")
+      # executeSQLFile "${TARGET_SQL_FILE_NAME}"
+      executeSQLFile "${filePath}"
     else
       echo "${filePath} is Not SQL File."
     fi
@@ -108,10 +109,6 @@ do
     findSqlFiles ${dirctory}
   fi
 done
-
-
-# dump command.
-# docker exec -it ${DATABASE_CONTAINER_NAME} mysqldump -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} > ${OUTPUT_FILE}
 
 # last message
 showMessage 'finish batch test '
