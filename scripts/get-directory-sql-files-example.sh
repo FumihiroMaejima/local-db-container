@@ -42,7 +42,11 @@ executeSQLFile() {
   # SQLの実行
   if [ -n "${TARGET_DB}" ]; then
     echo "TARGET DB: ${TARGET_DB}"
+    # 1つのDBを利用する場合
     # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
+
+    # DBを個別に指定する場合
+    # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${TARGET_DB} < ${TARGET_SQL_FILE}
   else
     echo "No Match DB."
     echo "No Execute."
@@ -52,7 +56,7 @@ executeSQLFile() {
 
 findSqlFiles() {
   DIRECTORY_PATH=$1
-  # ファイル探索
+  # ファイル探索(ソート込み)
   FIND_FILES_COMMAND=`find "${DIRECTORY_PATH}" -type f | sort`
 
   for filePath in ${FIND_FILES_COMMAND[@]};
@@ -88,7 +92,7 @@ showMessage "${START_MESSAGE}"
 # find sample/tmp/test -type d | while read dirctory; do echo -n $dirctory" "; find "$dirctory" -type f -maxdepth 1 | wc -l; done;
 # find "${TARGET_PATH}" -type d
 
-# ディレクトリ探索
+# ディレクトリ探索(ソート込み)
 FIND_DIRECTORIES_COMMAND=`find "${TARGET_PATH}" -type d | sort`
 
 
