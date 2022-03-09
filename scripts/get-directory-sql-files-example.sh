@@ -16,16 +16,39 @@ TIME_STAMP=$(date "+%Y%m%d_%H%M%S")
 
 TARGET_PATH=sample/tmp/directorytest
 
+DB_LIST=(
+"testDB1"
+"testDB2"
+)
+
 executeSQLFile() {
   TARGET_SQL_FILE=$1
-  echo "${TARGET_SQL_FILE_NAME}"
-  # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
+  echo "${SEPARATOPION}"
+  echo "TARGET SQL: ${TARGET_SQL_FILE_NAME}"
+  TARGET_DB=""
+  for dbName in ${DB_LIST[@]};
+  do
+    if [ `echo ${TARGET_SQL_FILE} | grep ${dbName}`  ]; then
+      TARGET_DB="${dbName}"
+    else
+      continue
+    fi
+  done
+
+  if [ -n "${TARGET_DB}" ]; then
+    echo "TARGET DB: ${TARGET_DB}"
+    # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
+  else
+    echo "No Match DB."
+    echo "No Execute."
+  fi
+  echo "${SEPARATOPION}"
 }
 
 findSqlFiles() {
-  DIRECTORY_NAME=$1
+  DIRECTORY_PATH=$1
   # ファイル探索
-  FIND_FILES_COMMAND=`find "${DIRECTORY_NAME}" -type f`
+  FIND_FILES_COMMAND=`find "${DIRECTORY_PATH}" -type f`
 
   for filePath in ${FIND_FILES_COMMAND[@]};
   do
