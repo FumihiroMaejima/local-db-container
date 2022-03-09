@@ -16,16 +16,48 @@ TIME_STAMP=$(date "+%Y%m%d_%H%M%S")
 
 TARGET_PATH=sample/tmp/directorytest
 
+DB_LIST=(
+"testDB1"
+"testDB2"
+"testDB3"
+"testDB4"
+)
+
 executeSQLFile() {
   TARGET_SQL_FILE=$1
-  echo "${TARGET_SQL_FILE_NAME}"
-  # docker exec -it ${DATABASE_CONTAINER_NAME} mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} < ${TARGET_SQL_FILE}
+  echo "${SEPARATOPION}"
+  echo "TARGET SQL: ${TARGET_SQL_FILE_NAME}"
+  TARGET_DB=""
+
+  # 対象のDBの探索
+  for dbName in ${DB_LIST[@]};
+  do
+    if [ `echo ${TARGET_SQL_FILE} | grep ${dbName}` ]; then
+      TARGET_DB="${dbName}"
+    else
+      continue
+    fi
+  done
+
+  # SQLの実行
+  if [ -n "${TARGET_DB}" ]; then
+    echo "TARGET DB: ${TARGET_DB}"
+    # 1つのDBを利用する場合
+    # docker exec -i ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${DATABASE_NAME}" < "${TARGET_SQL_FILE}"
+
+    # DBを個別に指定する場合
+    # docker exec -i ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${TARGET_DB}" < "${TARGET_SQL_FILE}"
+  else
+    echo "No Match DB."
+    echo "No Execute."
+  fi
+  echo "${SEPARATOPION}"
 }
 
 findSqlFiles() {
-  DIRECTORY_NAME=$1
-  # ファイル探索
-  FIND_FILES_COMMAND=`find "${DIRECTORY_NAME}" -type f`
+  DIRECTORY_PATH=$1
+  # ファイル探索(ソート込み)
+  FIND_FILES_COMMAND=`find "${DIRECTORY_PATH}" -type f | sort`
 
   for filePath in ${FIND_FILES_COMMAND[@]};
   do
@@ -33,8 +65,9 @@ findSqlFiles() {
     if [ `echo ${filePath} | grep .sql` ]; then
       # echo "${filePath}"
       # echo $(dirname "${filePath}") # directory name.
-      TARGET_SQL_FILE_NAME=$(basename "${filePath}")
-      executeSQLFile "${TARGET_SQL_FILE_NAME}"
+      # TARGET_SQL_FILE_NAME=$(basename "${filePath}")
+      # executeSQLFile "${TARGET_SQL_FILE_NAME}"
+      executeSQLFile "${filePath}"
     else
       echo "${filePath} is Not SQL File."
     fi
@@ -60,8 +93,8 @@ showMessage "${START_MESSAGE}"
 # find sample/tmp/test -type d | while read dirctory; do echo -n $dirctory" "; find "$dirctory" -type f -maxdepth 1 | wc -l; done;
 # find "${TARGET_PATH}" -type d
 
-# ディレクトリ探索
-FIND_DIRECTORIES_COMMAND=`find "${TARGET_PATH}" -type d`
+# ディレクトリ探索(ソート込み)
+FIND_DIRECTORIES_COMMAND=`find "${TARGET_PATH}" -type d | sort`
 
 
 # 対象のディレクトリ内に置かれているディレクトリを個別にチェック
@@ -76,10 +109,6 @@ do
     findSqlFiles ${dirctory}
   fi
 done
-
-
-# dump command.
-# docker exec -it ${DATABASE_CONTAINER_NAME} mysqldump -u ${DATABASE_USER} -p${DATABASE_PASSWORD} ${DATABASE_NAME} > ${OUTPUT_FILE}
 
 # last message
 showMessage 'finish batch test '
