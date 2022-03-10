@@ -108,7 +108,33 @@ CREATE TABLE testers (
 )ENGINE=InnoDB default charset=utf8mb4;
 ```
 
-----
+---
+
+# データベースの更新など
+
+```SQL
+-- データベースの名前の変更
+ALTER TABLE test_users RENAME TO renamed_users;
+
+-- データベースの名前の変更
+ALTER TABLE test_users ADD COLUMN price INT(11) DEFAULT 0 NOT NULL AFTER last_name;
+
+-- カラムの追加
+ALTER TABLE test_users ADD COLUMN email INT(11) DEFAULT 0 NOT NULL AFTER last_name;
+ALTER TABLE test_users ADD COLUMN address INT(11) DEFAULT 0 NOT NULL AFTER email;
+ALTER TABLE test_users ADD COLUMN prefecture INT(11) DEFAULT 0 NOT NULL AFTER address;
+ALTER TABLE test_users ADD COLUMN city INT(11) DEFAULT 0 NOT NULL AFTER prefecture;
+ALTER TABLE test_users ADD COLUMN block INT(11) DEFAULT 0 NOT NULL AFTER city;
+
+-- カラムのデータの変更
+ALTER TABLE test_users CHANGE COLUMN email phone INT(11) DEFAULT 0 NOT NULL;
+ALTER TABLE test_users CHANGE COLUMN phone email VARCHAR(255) DEFAULT NULL;
+
+-- テーブルの削除
+DROP TABLE local_db_replication.test_users;
+```
+
+---
 
 ## システムdateの確認
 
