@@ -103,9 +103,20 @@ CREATE TABLE testers (
     message varchar(255) default null,
     updated_at datetime not null,
     created_at datetime not null,
-    deleted_at datetime not null,
+    deleted_at datetime default null,
     primary key (`id`)
 )ENGINE=InnoDB default charset=utf8mb4;
+
+-- データの挿入
+INSERT INTO users(
+    name,
+    tel,
+    email
+)
+VALUES
+('User1 Test', '000-0000-0000', 'test1@example.com', NULL, '2022-03-10 00:00:00', '2022-03-10 00:00:00', NULL),
+('User2 Test', '000-0000-0000', 'test2@example.com', NULL, '2022-03-10 00:00:00', '2022-03-10 00:00:00', NULL),
+('User3 Test', '000-0000-0000', 'test3@example.com', NULL, '2022-03-10 00:00:00', '2022-03-10 00:00:00', NULL),
 ```
 
 ---
@@ -113,6 +124,10 @@ CREATE TABLE testers (
 # データベースの更新など
 
 ```SQL
+-- データの更新
+UPDATE test_users SET name = 'test' WHERE id = 1;
+UPDATE test_users SET name = 'test', email = 'test10@example.com' WHERE id IN {1, 2, 3};
+
 -- データベースの名前の変更
 ALTER TABLE test_users RENAME TO renamed_users;
 
@@ -131,7 +146,7 @@ ALTER TABLE test_users CHANGE COLUMN email phone INT(11) DEFAULT 0 NOT NULL;
 ALTER TABLE test_users CHANGE COLUMN phone email VARCHAR(255) DEFAULT NULL;
 
 -- テーブルの削除
-DROP TABLE local_db_replication.test_users;
+DROP TABLE database_name.test_users;
 ```
 
 ---
