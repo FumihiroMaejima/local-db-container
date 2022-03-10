@@ -24,7 +24,7 @@ DB_LIST=(
 )
 
 executeSQLFile() {
-  TARGET_SQL_FILE=$1
+  TARGET_SQL_FILE_PATH=$1
   echo "${SEPARATOPION}"
   echo "TARGET SQL: $(basename "${TARGET_SQL_FILE_PATH}")"
   TARGET_DB=""
