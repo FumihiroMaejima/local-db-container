@@ -24,15 +24,15 @@ DB_LIST=(
 )
 
 executeSQLFile() {
-  TARGET_SQL_FILE=$1
+  TARGET_SQL_FILE_PATH=$1
   echo "${SEPARATOPION}"
-  echo "TARGET SQL: ${TARGET_SQL_FILE_NAME}"
+  echo "TARGET SQL: $(basename "${TARGET_SQL_FILE_PATH}")"
   TARGET_DB=""
 
   # 対象のDBの探索
   for dbName in ${DB_LIST[@]};
   do
-    if [ `echo ${TARGET_SQL_FILE} | grep ${dbName}` ]; then
+    if [ `echo ${TARGET_SQL_FILE_PATH} | grep ${dbName}` ]; then
       TARGET_DB="${dbName}"
     else
       continue
@@ -43,10 +43,10 @@ executeSQLFile() {
   if [ -n "${TARGET_DB}" ]; then
     echo "TARGET DB: ${TARGET_DB}"
     # 1つのDBを利用する場合
-    # docker exec -i ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${DATABASE_NAME}" < "${TARGET_SQL_FILE}"
+    # docker exec -i ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${DATABASE_NAME}" < "${TARGET_SQL_FILE_PATH}"
 
     # DBを個別に指定する場合
-    # docker exec -i ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${TARGET_DB}" < "${TARGET_SQL_FILE}"
+    # docker exec -i ${DATABASE_CONTAINER_NAME} mysql -u "${DATABASE_USER}" -p"${DATABASE_PASSWORD}" -D "${TARGET_DB}" < "${TARGET_SQL_FILE_PATH}"
   else
     echo "No Match DB."
     echo "No Execute."
