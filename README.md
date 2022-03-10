@@ -145,8 +145,15 @@ ALTER TABLE test_users ADD COLUMN block INT(11) DEFAULT 0 NOT NULL AFTER city;
 ALTER TABLE test_users CHANGE COLUMN email phone INT(11) DEFAULT 0 NOT NULL;
 ALTER TABLE test_users CHANGE COLUMN phone email VARCHAR(255) DEFAULT NULL;
 
+-- 特定のデータの削除
+DELETE FROM table_name WHERE id = 1;
+
+-- テーブル内の全てのデータの削除
+TRUNCATE TABLE table_name;
+
 -- テーブルの削除
 DROP TABLE database_name.test_users;
+
 ```
 
 ---
