@@ -154,6 +154,11 @@ TRUNCATE TABLE table_name;
 -- テーブルの削除
 DROP TABLE database_name.test_users;
 
+-- 指定の時刻より後のデータ
+SELECT * FROM users
+WHERE CURRENT_DATE() >= updated_at;
+
+
 ```
 
 ---
