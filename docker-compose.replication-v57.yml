@@ -36,10 +36,12 @@ services:
 
 volumes:
   local-db-store:
-    name: ${VOLUME_NAME_REPLICATION_V57}
+    name: ${VOLUME_NAME_REPLICATION_V57}-local
     # driver: local
-    external: true
+    # external: true
+    external: false
   local-db-store-slave:
-    name: ${VOLUME_NAME_REPLICATION_V57}-slave
+    name: ${VOLUME_NAME_REPLICATION_V57}-slave-local
     # driver: local
-    external: true
+    # external: true
+    external: false
