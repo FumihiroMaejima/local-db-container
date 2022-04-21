@@ -159,7 +159,7 @@ SELECT * FROM users
 WHERE CURRENT_DATE() >= updated_at;
 
 -- データの削除
-DELETE FROM users where id=1;
+DELETE FROM users WHERE id=1;
 
 
 ```
