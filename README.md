@@ -158,6 +158,9 @@ DROP TABLE database_name.test_users;
 SELECT * FROM users
 WHERE CURRENT_DATE() >= updated_at;
 
+-- データの削除
+DELETE FROM users where id=1;
+
 
 ```
 
