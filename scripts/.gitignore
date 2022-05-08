@@ -1,3 +1,5 @@
 get-dump.sh
+get-table-dump.sh
 restore-dump.sh
+restore-table-dump.sh
 get-directory-sql-files.sh
