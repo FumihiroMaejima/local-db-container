@@ -4,6 +4,9 @@
 SEPARATOPION='---------------------------'
 START_MESSAGE='start restore database dump.'
 
+# dumpファイルに下記の記述がある場合は削除すること。
+# mysqldump: [Warning] Using a password on the command line interface can be insecure.
+
 # dateコマンド結果を指定のフォーマットで出力
 TIME_STAMP=$(date "+%Y%m%d_%H%M%S")
 
@@ -26,7 +29,8 @@ showMessage() {
 showMessage ${START_MESSAGE}
 
 # dump command.
-docker exec -it ${DATABASE_CONTAINER_NAME} mysqldump -u ${DATABASE_USER} -p${DATABASE_PASSWORD} -D ${DATABASE_NAME} < ${OUTPUT_FILE}
+# docker exec -it ${DATABASE_CONTAINER_NAME} mysqldump -u ${DATABASE_USER} -p${DATABASE_PASSWORD} -D ${DATABASE_NAME} < ${OUTPUT_FILE}
+docker exec -i ${DATABASE_CONTAINER_NAME} mysql -h localhost -u ${DATABASE_USER} -p${DATABASE_PASSWORD} -D ${DATABASE_NAME} < ${OUTPUT_FILE}
 
 # 現在のDocker コンテナの状態を出力
 showMessage 'restore data base dump.'
