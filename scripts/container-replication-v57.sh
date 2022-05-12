@@ -24,7 +24,15 @@ if [[ "$(docker-compose -f ${DOCKER_COMPOSE_FILE} ps -q 2>/dev/null)" == "" ]]; 
 else
 　# コンテナが立ち上がっている状態の時
   showMessage 'Down Docker Container!'
-  docker-compose -f ${DOCKER_COMPOSE_FILE} down
+  # docker-compose -f ${DOCKER_COMPOSE_FILE} down
+  # -vオプションを指定すると、Volume ${VOLUME_NAME} is external, skippingとメッセージが出る為固定のvolumeを指定しない方が良さそう。
+  # external:falseにするとvolumeを削除してレプリケーションも有効化出来るが、
+  # データも消える為、volume作成と同時にデータを入れる仕組み(バッチなど)が必要。
+  docker-compose -f ${DOCKER_COMPOSE_FILE} down -v
+
+  # stopだとレプリケーションが引き続き有効になる。
+  # 時間のかかる処理の場合はdownさせずstopをかけるのが無難
+  # docker-compose -f ${DOCKER_COMPOSE_FILE} stop
 fi
 
 # 現在のDocker コンテナの状態を出力

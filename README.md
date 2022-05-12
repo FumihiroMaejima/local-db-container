@@ -117,6 +117,9 @@ VALUES
 ('User1 Test', '000-0000-0000', 'test1@example.com', NULL, '2022-03-10 00:00:00', '2022-03-10 00:00:00', NULL),
 ('User2 Test', '000-0000-0000', 'test2@example.com', NULL, '2022-03-10 00:00:00', '2022-03-10 00:00:00', NULL),
 ('User3 Test', '000-0000-0000', 'test3@example.com', NULL, '2022-03-10 00:00:00', '2022-03-10 00:00:00', NULL),
+
+-- 複数検索
+SELECT * FROM users WHERE id IN (1, 5, 8);
 ```
 
 ---
@@ -126,7 +129,7 @@ VALUES
 ```SQL
 -- データの更新
 UPDATE test_users SET name = 'test' WHERE id = 1;
-UPDATE test_users SET name = 'test', email = 'test10@example.com' WHERE id IN {1, 2, 3};
+UPDATE test_users SET name = 'test', email = 'test10@example.com' WHERE id IN (1, 2, 3);
 
 -- データベースの名前の変更
 ALTER TABLE test_users RENAME TO renamed_users;
@@ -153,6 +156,14 @@ TRUNCATE TABLE table_name;
 
 -- テーブルの削除
 DROP TABLE database_name.test_users;
+
+-- 指定の時刻より後のデータ
+SELECT * FROM users
+WHERE CURRENT_DATE() >= updated_at;
+
+-- データの削除
+DELETE FROM users WHERE id = 1;
+
 
 ```
 

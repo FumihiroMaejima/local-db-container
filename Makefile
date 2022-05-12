@@ -84,6 +84,12 @@ mysql-dump:
 mysql-restore:
 	sh ./scripts/restore-dump.sh
 
+mysql-table-dump:
+	sh ./scripts/get-table-dump.sh
+
+mysql-table-restore:
+	sh ./scripts/restore-table-dump.sh
+
 ##############################
 # manage docker file
 ##############################
