@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # CURRENT_DIR=$(cd $(dirname $0); pwd)
-SEPARATOPION='---------------------------'
+DELIMITER_LINE='------------------------------------------------------'
 START_MESSAGE='start restore database dump.'
 
 # dumpファイルに下記の記述がある場合は削除すること。
@@ -24,7 +24,7 @@ OUTPUT_FILE=sample/dump/dump.sql
 
 # @param {string} message
 showMessage() {
-  echo ${SEPARATOPION}
+  echo ${DELIMITER_LINE}
   echo $1
 }
 

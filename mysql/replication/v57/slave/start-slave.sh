@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # CURRENT_DIR=$(cd $(dirname $0); pwd)
-SEPARATOPION='---------------------------'
+DELIMITER_LINE='------------------------------------------------------'
 START_MESSAGE='start slave server.'
 
 MASTER_HOST='mysql-master'
@@ -11,7 +11,7 @@ SLAVE_PASSWORD='password'
 
 # @param {string} message
 showMessage() {
-  echo ${SEPARATOPION}
+  echo ${DELIMITER_LINE}
   echo $1
 }
 
