@@ -256,6 +256,53 @@ ALTER TABLE database_name.table_name DROP PARTITION p100001;
 
 ---
 
+## 日時関数
+
+```sql
+-- 現在の日時を取得
+SELECT NOW();
+SELECT CURRENT_DATE();
+SELECT DATE_FORMAT(CURRENT_DATE() , '%Y%m%d');
+
+-- 指定した日付の間差分日数を取得
+SELECT DATEDIFF('2022-11-28', '2022-07-28');
+
+-- 翌日のdateを取得
+SELECT DATE_ADD(CURRENT_DATE(), INTERVAL 1 DAY);
+SELECT DATE_ADD(CURRENT_DATE(), INTERVAL 1 DAY), DATE_ADD(CURRENT_DATE(), INTERVAL 2 DAY);
+
+-- 指定した日付の10日後を取得する
+SELECT DATE_ADD('2022/01/10', INTERVAL 10 DAY);
+-- 指定した日付の20日前を取得する
+SELECT DATE_SUB('2022/08/30',INTERVAL 20 DAY);
+-- DATE_ADD でマイナスの値を指定して減算する
+SELECT DATE_ADD('2022/08/30',INTERVAL -20 DAY);
+
+-- 3か月後の日時、又は日付を取得する
+SELECT DATE_ADD(NOW(), INTERVAL 3 MONTH);
+SELECT DATE_ADD(CURRENT_DATE(), INTERVAL 3 MONTH);
+
+-- 現在の日付と時刻を数値として取得する場合は
+SELECT now()+0;
+-- 引数に小数秒の精度を0~6の数値で指定する
+SELECT now(0), now(3);
+
+-- 日付のフォーマット指定
+SELECT DATE_FORMAT('2022-03-02', '%Y %M %d');
+SELECT DATE_FORMAT(CURRENT_DATE() , '%Y %M %d');
+SELECT DATE_FORMAT(CURRENT_DATE() , '%Y%m%d');
+-- 3ヶ月後の日付
+SELECT DATE_FORMAT(DATE_ADD(CURRENT_DATE(), INTERVAL 3 MONTH) , '%Y%m%d');
+-- 時刻付き('Y-m-d H:i:s')
+SELECT DATE_FORMAT(CURRENT_DATE() , '%Y-%m-%d %H:%i:%s');
+SELECT DATE_FORMAT(DATE_ADD(CURRENT_DATE(), INTERVAL 3 MONTH), '%Y-%m-%d %H:%i:%s');
+
+
+```
+
+
+---
+
 ## バイナリログの確認
 
 ```shell-session
