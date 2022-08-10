@@ -303,6 +303,34 @@ SELECT DATE_FORMAT(DATE_ADD(CURRENT_DATE(), INTERVAL 3 MONTH), '%Y-%m-%d %H:%i:%
 
 ---
 
+## Indexの設定
+
+index設定の確認
+
+```sql
+SHOW INDEX FROM database_name.table_name;
+```
+
+| カラム名 | 説明 |
+| :--- | :--- |
+| Table | テーブル名 |
+| Non_unique | 重複許可設定。重複可能:1, 重複不可:0 |
+| Key_name | インデックス名。主キーなら、常にprimary |
+| Seq_in_index | インデックス内のカラムシーケンス番号であり、1から始まる。 |
+| Column_name | カラム名 |
+| Collation | インデックス内カラムのソート方法。A:昇順, NULL:ソートされない |
+| Cardinality | インデックス内のユニーク数の推定値。 |
+| Sub_part | カラムが部分的インデックス設定されてるときの文字の数。カラム全体がインデックス設定されている場合は NULL。 |
+| Packed | キーがパックされる方法。パックされない場合は NULL。 |
+| Null | NULL許可設定。可能:YES, 不可:空白 |
+| Index_type | 使用されるインデックス方法 (BTREE、FULLTEXT、HASH、RTREE) |
+| Comment | コメント |
+| Index_comment | indexコメント |
+
+
+
+---
+
 ## バイナリログの確認
 
 ```shell-session
