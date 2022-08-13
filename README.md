@@ -337,6 +337,23 @@ SHOW INDEX FROM database_name.table_name;
 
 ---
 
+## ロックについて
+
+### デッドロックが発生した時の対応
+
+```sql
+-- ロック状態の確認(件数のみ)
+SELECT TRX_ROWS_LOCKED FROM INFORMATION_SCHEMA.INNODB_TRX;
+
+-- .件数＋スレッドID(Statusカラムで確認出来る)
+SHOW ENGINE INNODB STATUS;
+
+-- プロセスの確認
+SHOW PROCESSLIST;
+```
+
+---
+
 ## バイナリログの確認
 
 ```shell-session
