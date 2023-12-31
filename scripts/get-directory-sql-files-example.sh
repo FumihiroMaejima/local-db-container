@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CURRENT_DIR=$(cd $(dirname $0); pwd)
-SEPARATOPION='---------------------------'
+DELIMITER_LINE='------------------------------------------------------'
 START_MESSAGE='start batch test.'
 
 # dateコマンド結果を指定のフォーマットで出力
@@ -25,7 +25,7 @@ DB_LIST=(
 
 executeSQLFile() {
   TARGET_SQL_FILE_PATH=$1
-  echo "${SEPARATOPION}"
+  echo "${DELIMITER_LINE}"
   echo "TARGET SQL: $(basename "${TARGET_SQL_FILE_PATH}")"
   TARGET_DB=""
 
@@ -51,7 +51,7 @@ executeSQLFile() {
     echo "No Match DB."
     echo "No Execute."
   fi
-  echo "${SEPARATOPION}"
+  echo "${DELIMITER_LINE}"
 }
 
 findSqlFiles() {
@@ -77,9 +77,9 @@ findSqlFiles() {
 
 # @param {string} message
 showMessage() {
-  echo ${SEPARATOPION}
+  echo ${DELIMITER_LINE}
   echo $1
-  echo ${SEPARATOPION}
+  echo ${DELIMITER_LINE}
 }
 
 # process start
